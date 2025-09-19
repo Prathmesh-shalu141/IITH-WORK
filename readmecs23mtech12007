@@ -1,0 +1,26 @@
+
+//one is blockchain_scheduler.cpp for parallel 
+//another one is sequential.cpp for serial 
+
+//Here i have used two distribution:
+
+//1 BELL distribution
+//2 Uniform distribution
+
+//there are generator files also for generating input.txt for either unifrom distribution or bell distribution
+
+//python3 generator.py // command for generating input.txt for unifrom distribution
+
+//python3 generator_bell.py // command for generating input.txt for bell distribution
+
+//To run and compile :
+
+   //g++ -o seq sequential.cpp
+
+//to run : ./seq
+
+//to run aand compile parallel one : 
+
+//g++ -o blo blockchain_scheduler.cpp
+
+//to run : ./blo

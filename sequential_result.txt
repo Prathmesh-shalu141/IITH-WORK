@@ -1,0 +1,39 @@
+--- Sequential Execution Result ---
+Executed transaction ID: t1085 | Gas Fee: 499
+Executed transaction ID: t1025 | Gas Fee: 499
+Executed transaction ID: t910 | Gas Fee: 499
+Executed transaction ID: t188 | Gas Fee: 499
+Executed transaction ID: t1356 | Gas Fee: 498
+Executed transaction ID: t1298 | Gas Fee: 498
+Executed transaction ID: t1026 | Gas Fee: 498
+Executed transaction ID: t218 | Gas Fee: 498
+Executed transaction ID: t1 | Gas Fee: 497
+Executed transaction ID: t1499 | Gas Fee: 497
+Executed transaction ID: t1120 | Gas Fee: 497
+Executed transaction ID: t925 | Gas Fee: 497
+Executed transaction ID: t867 | Gas Fee: 497
+Executed transaction ID: t692 | Gas Fee: 497
+Executed transaction ID: t421 | Gas Fee: 497
+Executed transaction ID: t114 | Gas Fee: 497
+Executed transaction ID: t1406 | Gas Fee: 496
+Executed transaction ID: t413 | Gas Fee: 496
+Executed transaction ID: t790 | Gas Fee: 495
+Executed transaction ID: t1107 | Gas Fee: 495
+Executed transaction ID: t1460 | Gas Fee: 495
+Executed transaction ID: t221 | Gas Fee: 494
+Executed transaction ID: t311 | Gas Fee: 494
+Executed transaction ID: t29 | Gas Fee: 494
+Executed transaction ID: t927 | Gas Fee: 493
+Executed transaction ID: t179 | Gas Fee: 493
+Executed transaction ID: t764 | Gas Fee: 493
+Executed transaction ID: t65 | Gas Fee: 493
+Executed transaction ID: t264 | Gas Fee: 493
+Executed transaction ID: t643 | Gas Fee: 493
+Executed transaction ID: t31 | Gas Fee: 493
+Executed transaction ID: t130 | Gas Fee: 492
+Executed transaction ID: t865 | Gas Fee: 492
+
+Total transactions executed: 33
+Total gas fee collected: 16358
+Total time consumed: 9.9 seconds
+Time limit provided: 10 seconds
