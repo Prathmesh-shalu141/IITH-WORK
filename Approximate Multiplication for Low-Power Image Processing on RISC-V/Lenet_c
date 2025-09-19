@@ -1,0 +1,105 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+#define IMG_SIZE 28   // MNIST image size
+#define KERNEL_SIZE 5
+#define POOL_SIZE 2
+#define FC_OUT 10     // 10 classes (digits 0-9)
+
+// Example input image (28x28 grayscale, values 0–255)
+uint8_t input_image[IMG_SIZE][IMG_SIZE] = {
+    // Fill with test image pixels (e.g., a digit "3")
+};
+
+// Example convolution kernel (5x5, single filter)
+int8_t conv_kernel[KERNEL_SIZE][KERNEL_SIZE] = {
+    {1, 0, -1, 0, 1},
+    {1, 0, -1, 0, 1},
+    {1, 0, -1, 0, 1},
+    {1, 0, -1, 0, 1},
+    {1, 0, -1, 0, 1}
+};
+
+// Fully connected weights (small random example)
+int8_t fc_weights[FC_OUT][(IMG_SIZE/POOL_SIZE)*(IMG_SIZE/POOL_SIZE)];
+int32_t fc_bias[FC_OUT];
+
+// Intermediate buffers
+int32_t conv_out[IMG_SIZE - KERNEL_SIZE + 1][IMG_SIZE - KERNEL_SIZE + 1];
+int32_t pool_out[(IMG_SIZE - KERNEL_SIZE + 1) / POOL_SIZE][(IMG_SIZE - KERNEL_SIZE + 1) / POOL_SIZE];
+int32_t fc_out[FC_OUT];
+
+// Simple convolution
+void conv2d(uint8_t input[IMG_SIZE][IMG_SIZE], int8_t kernel[KERNEL_SIZE][KERNEL_SIZE]) {
+    int out_size = IMG_SIZE - KERNEL_SIZE + 1;
+    for (int i = 0; i < out_size; i++) {
+        for (int j = 0; j < out_size; j++) {
+            int32_t sum = 0;
+            for (int ki = 0; ki < KERNEL_SIZE; ki++) {
+                for (int kj = 0; kj < KERNEL_SIZE; kj++) {
+                    sum += input[i + ki][j + kj] * kernel[ki][kj];
+                }
+            }
+            conv_out[i][j] = sum > 0 ? sum : 0; // ReLU
+        }
+    }
+}
+
+// 2x2 max pooling
+void maxpool2d() {
+    int in_size = IMG_SIZE - KERNEL_SIZE + 1;
+    int out_size = in_size / POOL_SIZE;
+    for (int i = 0; i < out_size; i++) {
+        for (int j = 0; j < out_size; j++) {
+            int32_t max = conv_out[i*POOL_SIZE][j*POOL_SIZE];
+            for (int pi = 0; pi < POOL_SIZE; pi++) {
+                for (int pj = 0; pj < POOL_SIZE; pj++) {
+                    int32_t val = conv_out[i*POOL_SIZE + pi][j*POOL_SIZE + pj];
+                    if (val > max) max = val;
+                }
+            }
+            pool_out[i][j] = max;
+        }
+    }
+}
+
+// Fully connected layer
+void fully_connected() {
+    int in_size = (IMG_SIZE - KERNEL_SIZE + 1) / POOL_SIZE;
+    int flattened = in_size * in_size;
+    for (int o = 0; o < FC_OUT; o++) {
+        int32_t sum = fc_bias[o];
+        int idx = 0;
+        for (int i = 0; i < in_size; i++) {
+            for (int j = 0; j < in_size; j++) {
+                sum += pool_out[i][j] * fc_weights[o][idx++];
+            }
+        }
+        fc_out[o] = sum;
+    }
+}
+
+// Argmax for classification
+int classify() {
+    int best = 0;
+    for (int i = 1; i < FC_OUT; i++) {
+        if (fc_out[i] > fc_out[best]) best = i;
+    }
+    return best;
+}
+
+int main() {
+    printf("Running Tiny LeNet Classification...\n");
+
+    conv2d(input_image, conv_kernel);
+    maxpool2d();
+    fully_connected();
+    int prediction = classify();
+
+    printf("Predicted digit = %d\n", prediction);
+
+    return 0;
+}
+
